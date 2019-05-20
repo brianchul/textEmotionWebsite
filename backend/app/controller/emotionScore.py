@@ -18,11 +18,7 @@ def Create(commentID, score):
     if c == 200: return r,c
         
     newEmotionScore = EmotionScore(CommentID=commentID, Score=score)
-
-    try:
-        db.session.add(newEmotionScore)
-        db.session.commit()
-        return 200
-    except:
-        log().error("There's a error while creating newEmotionScore")
-        return 500
+    db.session.add(newEmotionScore)
+    db.session.commit()
+    return 200
+    

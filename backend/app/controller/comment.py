@@ -30,23 +30,23 @@ def Findall(ID=None, fromArticle=None, author=None, keywords=None):
         return None, 404
 
 # cond = {id:123 , comment:"STRING"}
-def Create(fromArticle, author, keywords, commentString, commentTime, lang):
+def Create(fromArticle, author, commentString, commentTime, commentPush, lang ):
     newComment = Comment(
         FromArticle=fromArticle,
         Author=author,
         CommentString=commentString,
         CommentTime=commentTime,
         Language=lang,
-        Keywords=keywords,
+        CommentPush=commentPush
         )
     
     try:
         db.session.add(newComment)
         db.session.commit()
-        return 200
+        return newComment.id, 200
     except InvalidRequestError:
         log().error("Unable to create comment")
-        return 400
+        return None, 400
     except IntegrityError:
-        log().error("Foreign key not found")
-        return 400
+        log().error("Comment Foreign key not found")
+        return None, 400

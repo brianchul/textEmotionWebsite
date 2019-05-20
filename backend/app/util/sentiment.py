@@ -1,24 +1,25 @@
-import  json, requests
+import  json, requests, uuid
 from ..config.conf import Config
 
 
 
-url = 'https://japaneast.api.cognitive.microsoft.com'
-path = '/text/analytics/v2.0/Sentiment'
+# comments = [{id:comment}]
+def getSentiment(comments):
+    header = {
+        # Request headers
+        'Content-Type': 'application/json',
+        'Ocp-Apim-Subscription-Key': Config.sentiment_key,
+    }
 
-header = {
-    # Request headers
-    'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': Config.sentiment_key,
-}
-
-def getSentiment(text):
     documents = { 'documents': []}
-    documents.setdefault('documents').append({"language":"en","id":"0","text":"Request body format is wrong. Make sure the json request is serialized correctly and there are no null members"})
+    for key in comments:
+        documents.setdefault('documents').append({"language":"en","id":str(key),"text":comments[key]})
+        
     body = json.dumps(documents)
 
-
-
-    response = requests.post(url+path, headers=header, json=body)
-    print(response.text)
-
+    try:
+        response = requests.post(Config.sentiment_url+Config.sentiment_path, headers=header, data=body).json()
+        
+        return response['documents']
+    except:
+        return None

@@ -10,3 +10,5 @@ backend/app/config/conf\.py
 *.DS_Store
 
 backend/\.vscode/
+
+backend/app/migrations/versions/

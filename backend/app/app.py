@@ -2,17 +2,14 @@ from flask import Flask, jsonify
 from .util.warpResponse import warpResponse, response
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
-from flask_jwt_extended import (
-    JWTManager, jwt_required, create_access_token,
-    get_jwt_identity
-)
+
 
 from .config.conf import Config
 
 from flask_cors import CORS
 
 from .model import db
-from app.model import userLogin, userEndorse, userProfile, comment, commentEndorse, endorsement
+from app.model import user, emotionScore, keywords, comment, language, article
 
 
 prefix = "/api"
@@ -27,28 +24,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 flask_bcrypt = Bcrypt(app)
 
-app.config['JWT_SECRET_KEY'] = Config.jwt_secret
-jwt = JWTManager(app)
+
 
 db.init_app(app)
 migrate = Migrate(app, db)
 
 
-from .route.userLogin import bUserLogin
-from .route.comment import bComment
-from .route.commentEndorse import bCommentEndorse
-from .route.userEndorse import bUserEndorse
-from .route.userProfile import bUserProfile
-from .route.endorsement import bEndorsement
-
+from .route.article import barticle
 CORS(app)
 
-addPrefixToBlueprint(bUserLogin, "/login")
-addPrefixToBlueprint(bComment, "/comment")
-addPrefixToBlueprint(bCommentEndorse, "/commentEndorse")
-addPrefixToBlueprint(bUserEndorse, "/userEndorse")
-addPrefixToBlueprint(bUserProfile, "/userProfile")
-addPrefixToBlueprint(bEndorsement, "/endorsement")
+addPrefixToBlueprint(barticle, "/article")
 
 
 

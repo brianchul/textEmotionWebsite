@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 def isOver18(url):
     response = requests.get(url, cookies={'over18': '1'})  # 一直向 server 回答滿 18 歲了 !
-    print(response.text)
+
     return response
     
 def deleteUrlInComment(text):
@@ -11,26 +11,40 @@ def deleteUrlInComment(text):
         return None
     return text
 
-url = "https://www.ptt.cc/bbs/Gossiping/index.html"
-article={}
-def get_push(url):#單篇文章所有留言
+def getArticle(url):
 
     author_message = {}
-    soup = BeautifulSoup(isOver18(url).text,"html.parser")
+    articleInfo = {}
+    webpage = isOver18(url).text
+    soup = BeautifulSoup(webpage ,"html.parser")
+    metaline = soup.find_all('div', 'article-metaline')
+    
+    tmp = []
+    for t1 in metaline:
+        tmp.append(t1.find("span", "article-meta-value").getText())
+        
+    articleInfo['author'] = tmp[0]
+    articleInfo['title'] = tmp[1]
+    articleInfo['time'] = tmp[2]
+    
     articles=soup.find_all('div','push')
     for article in articles:
         try:
-            
+            articleInfo['content'] = webpage[webpage.index("article-meta-tag\">時間</span>")+98:webpage.index('<span class="f2">※')]
+                        
             author = article.find("span", "f3 hl push-userid").getText()
             parseComment = deleteUrlInComment(article.find("span","f3 push-content").getText().replace(":"," ").strip())
             pushTag = article.find("span","f1 hl push-tag").getText().replace(":"," ").strip()
             pushDatetime = article.find("span","push-ipdatetime").getText().strip()
             
-            comment = {pushTag: parseComment, "pushDatetime": pushDatetime}
+            comment = {"pushTag": pushTag, "comment": parseComment, "pushDatetime": pushDatetime}
             if parseComment is not None:
                 author_message.setdefault(author, []).append(comment)
-                    
+                
         except AttributeError:
-            print("資料有誤")
+            #print("資料有誤")
+            pass
 
-    return author_message
+    
+    return articleInfo, author_message
+

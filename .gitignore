@@ -1,0 +1,12 @@
+
+backend/app/\.DS_Store
+
+*.pyc
+
+backend/venv/
+
+backend/app/config/conf\.py
+
+*.DS_Store
+
+backend/\.vscode/

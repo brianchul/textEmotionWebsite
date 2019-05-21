@@ -36,7 +36,6 @@ CORS(app)
 addPrefixToBlueprint(barticle, "/article")
 
 
-
 @app.errorhandler(404)
 def not_found(error):
     return warpResponse(response.ResourceNotFound)

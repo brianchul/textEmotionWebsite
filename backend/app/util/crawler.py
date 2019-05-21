@@ -31,6 +31,7 @@ def getArticle(url):
     for article in articles:
         try:
             articleInfo['content'] = webpage[webpage.index("article-meta-tag\">時間</span>")+98:webpage.index('<span class="f2">※')]
+            articleInfo['content'] = articleInfo['content'].replace("\n", "<br />")
                         
             author = article.find("span", "f3 hl push-userid").getText()
             parseComment = deleteUrlInComment(article.find("span","f3 push-content").getText().replace(":"," ").strip())

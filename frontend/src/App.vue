@@ -12,8 +12,10 @@ export default {
   components: {
     Search
   },
-  data: {
-    clicked: true
+  data() {
+    return {
+      clicked: true,
+    }
   },
 }
 </script>

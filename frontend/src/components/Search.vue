@@ -1,30 +1,35 @@
 <template>
-  <div>
-    <div id="search" class="searchWrapper" v-if="clicked">
-      <img src="../assets/logo.png" class="logo">
-      <div class="slogan">URL在手，喜怒哀樂應有盡有</div>
-      <div class="searchbar">   
-        <input placeholder="請輸入ptt網址" size="100" v-model="url"/>
-        <div class="send" @click="send">送出</div>
-      </div>  
+  <div v-if="contents.length === 0" class="searchWrapper">
+    <img src="../assets/logo.png" class="logo" />
+    <div class="slogan">URL在手，喜怒哀樂應有盡有</div>
+    <div class="searchbar">
+      <input placeholder="請輸入ptt網址" size="100" v-model="url"/>
+      <div class="send" @click="send">送出</div>
     </div>
-    <div v-else>
-      <p>{{contents.article.ArticleAuthor}}</p>
-    </div>
-  </div>  
+  </div>
+  <div v-else>
+    <Article :content="contents.article" />
+    <Comment :content="contents.comment" />
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import Article from './Article.vue';
+import Comment from './Comment.vue';
 
 export default {
   name: 'search',
   data() {
-    return{
+    return {
       url: '',
       contents: [],
       clicked: true,
-    }
+    };
+  },
+  components: {
+    Article,
+    Comment,
   },
   methods: {
     send() {
@@ -33,10 +38,12 @@ export default {
       }).then((res) => {
         this.contents = res.data.data;
         console.log(this.contents);
-        this.clicked = false;
       })
     }
-  }
+  },
+  created() {
+    console.log(this.contents);
+  },
 }
 </script>
 

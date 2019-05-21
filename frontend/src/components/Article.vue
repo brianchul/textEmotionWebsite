@@ -19,21 +19,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .articleWrapper {
-  width: 70%;
+  width: 50%;
 }
 .title {
   height: 45px;
   font-size: 32px;
 }
 .content {
-  width: 70%;
+  left: 30px;
+  right: 30px;
   position: absolute;
-  top: 45px;
+  top: 70px;
   bottom: 0px;
+  padding: 30px;
   text-align: left;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: scroll;
 }
 .articleWrapper>>>.hl.f3 {

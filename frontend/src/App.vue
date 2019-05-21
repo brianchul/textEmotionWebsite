@@ -11,7 +11,11 @@ export default {
   name: 'app',
   components: {
     Search
-  }
+  },
+  data() {
+    return {
+    }
+  },
 }
 </script>
 

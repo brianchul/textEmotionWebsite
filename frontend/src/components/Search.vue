@@ -1,30 +1,45 @@
 <template>
-  <div id="search" class="searchWrapper">
-    <img src="../assets/logo.png" class="logo">
+  <div v-if="contents.length === 0" class="searchWrapper">
+    <img src="../assets/logo.png" class="logo" />
     <div class="slogan">URL在手，喜怒哀樂應有盡有</div>
-    <div class="searchbar">   
+    <div class="searchbar">
       <input placeholder="請輸入ptt網址" size="100" v-model="url"/>
       <div class="send" @click="send">送出</div>
-    </div>  
+    </div>
+  </div>
+  <div v-else class="contentWrapper">
+    <Article :content="contents.article" />
+    <Comment :content="contents.comment" />
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import Article from './Article.vue';
+import Comment from './Comment.vue';
+
 export default {
   name: 'search',
-  data: {
-    url: '',
-    contents: [],
+  data() {
+    return {
+      url: '',
+      contents: []
+    };
+  },
+  components: {
+    Article,
+    Comment,
   },
   methods: {
     send() {
-      axios.post('',{
-        content: this.url
+      axios.post('http://emoptt.ddns.net:5000/api/article/query',{
+        article_url: this.url
       }).then((res) => {
-        console.log(res)
+        console.log(res.data.data.contents);
+        this.contents = res.data.data;
       })
     }
-  }
+  },
 }
 </script>
 
@@ -63,4 +78,12 @@ input {
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.17);
   background-color: #007FAD;
 }
+
+.contentWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: stretch;
+}
+
 </style>

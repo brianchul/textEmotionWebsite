@@ -7,7 +7,7 @@
       <div class="send" @click="send">送出</div>
     </div>
   </div>
-  <div v-else>
+  <div v-else class="contentWrapper">
     <Article :content="contents.article" />
     <Comment :content="contents.comment" />
   </div>
@@ -23,8 +23,7 @@ export default {
   data() {
     return {
       url: '',
-      contents: [],
-      clicked: true,
+      contents: []
     };
   },
   components: {
@@ -33,16 +32,13 @@ export default {
   },
   methods: {
     send() {
-      axios.post('http://localhost:5000/api/article/query',{
+      axios.post('http://emoptt.ddns.net:5000/api/article/query',{
         article_url: this.url
       }).then((res) => {
+        console.log(res.data.data.contents);
         this.contents = res.data.data;
-        console.log(this.contents);
       })
     }
-  },
-  created() {
-    console.log(this.contents);
   },
 }
 </script>
@@ -82,4 +78,12 @@ input {
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.17);
   background-color: #007FAD;
 }
+
+.contentWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: stretch;
+}
+
 </style>

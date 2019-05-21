@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     send() {
-      axios.post('http://emoptt.ddns.net:5000/api/article/query',{
+      axios.post('https://emoptt.ddns.net:5000/api/article/query',{
         article_url: this.url
       }).then((res) => {
         this.contents = res.data.data;

@@ -1,5 +1,5 @@
 <template>
-  <div>Comment</div>
+  <div class="comment">Comment</div>
 </template>
 
 <script>
@@ -10,4 +10,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.comment {
+  width: 30%;
+}
 </style>

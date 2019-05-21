@@ -35,7 +35,6 @@ export default {
       axios.post('http://emoptt.ddns.net:5000/api/article/query',{
         article_url: this.url
       }).then((res) => {
-        console.log(res.data.data.contents);
         this.contents = res.data.data;
       })
     }
@@ -82,6 +81,7 @@ input {
 .contentWrapper {
   width: 100vw;
   height: 100vh;
+  background-color: black;
   display: flex;
   align-items: stretch;
 }

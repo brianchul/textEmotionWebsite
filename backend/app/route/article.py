@@ -30,7 +30,10 @@ def queryArticle():
         
         for rcomment in commentResult:
             emotionResult, _ = emotionScore.Findone(rcomment['id'])
-            rcomment['emotionScore'] = emotionResult['Score']
+            if emotionResult:
+                rcomment['emotionScore'] = emotionResult['Score']
+            else:
+                rcomment['emotionScore'] = 0.5
             rcomment['Author'] = user.FindOneOrCreate(ID=rcomment['Author'])['UserName']
 
         integration = {'article': result, 'comment':commentResult}

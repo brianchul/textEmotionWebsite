@@ -35,7 +35,11 @@ def getArticle(url):
                         
             author = article.find("span", "f3 hl push-userid").getText()
             parseComment = deleteUrlInComment(article.find("span","f3 push-content").getText().replace(":"," ").strip())
-            pushTag = article.find("span","f1 hl push-tag").getText().replace(":"," ").strip()
+            try:
+                pushTag = article.find("span","f1 hl push-tag").getText().replace(":"," ").strip()
+            except:
+                pushTag = article.find("span","hl push-tag").getText().replace(":"," ").strip()
+                
             pushDatetime = article.find("span","push-ipdatetime").getText().strip()
             
             comment = {"pushTag": pushTag, "comment": parseComment, "pushDatetime": pushDatetime}

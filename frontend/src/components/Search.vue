@@ -8,8 +8,29 @@
     </div>
   </div>
   <div v-else class="contentWrapper">
-    <Article :content="contents.article" />
-    <Comment :content="contents.comment" />
+    <div class="title">
+      <div class="titleRow">
+        <div class="titleTag">作者</div>
+        <div class="titleItem">{{contents.article.ArticleAuthor}}</div>
+      </div>
+      <div class="titleRow">
+        <div class="titleTag">標題</div>
+        <div class="titleItem">{{contents.article.ArticleTitle}}</div>
+      </div>
+      <div class="titleRow">
+        <div class="titleTag">來源</div>
+        <div class="titleItem">{{contents.article.ArticleUrl}}</div>
+      </div>
+      <div class="titleRow">
+        <div class="titleTag">時間</div>
+        <div class="titleItem">{{contents.article.updated_time}}</div>
+      </div>
+      <div class="close" @click="contents = []">關閉</div>
+    </div>
+    <div class="contentGroup">
+      <Article :content="contents.article" />
+      <Comment :content="contents.comment" />
+    </div>
   </div>
 </template>
 
@@ -36,6 +57,7 @@ export default {
         article_url: this.url
       }).then((res) => {
         this.contents = res.data.data;
+        console.log(this.contents)
       })
     }
   },
@@ -85,5 +107,44 @@ input {
   display: flex;
   align-items: stretch;
 }
-
+.title {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+  z-index: 10;
+}
+.titleRow {
+  display: flex;
+  height: 30px;
+  line-height: 30px;
+}
+.titleTag {
+  padding: 0 10px;
+  background-color: #999;
+  color: #000;
+  text-align: center;
+}
+.titleItem {
+  flex: 1 1 auto;
+  padding-left: 20px;
+  background-color: #000;
+  color: #fff;
+  text-align: left;
+}
+.contentGroup {
+  position: absolute;
+  width: calc(100% - 20px);
+  top: 120px;
+  bottom: 0;
+  display: flex;
+  background-color: #000;
+  padding: 10px;
+}
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
 </style>

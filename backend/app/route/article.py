@@ -29,7 +29,6 @@ def queryArticle():
         commentResult, _ = comment.Findall(fromArticle=result['id'])
         
         for rcomment in commentResult:
-            log().debug(rcomment)
             emotionResult, _ = emotionScore.Findone(rcomment['id'])
             rcomment['emotionScore'] = emotionResult['Score']
             rcomment['Author'] = user.FindOneOrCreate(ID=rcomment['Author'])['UserName']
@@ -48,7 +47,6 @@ def queryArticle():
             commentResult, _ = comment.Findall(fromArticle=result['id'])
             
             for rcomment in commentResult:
-                log().debug(rcomment)
                 emotionResult, _ = emotionScore.Findone(rcomment['id'])
                 rcomment['emotionScore'] = emotionResult['Score']
                 rcomment['Author'] = user.FindOneOrCreate(ID=rcomment['Author'])['UserName']
@@ -68,7 +66,7 @@ def CreateArticle(inputs):
     articleContent, articleComment = getArticle(findOneArticle.article_url)
     
     articleAuthor = user.FindOneOrCreate(userName=articleContent['author'])['id']
-    log().debug(articleAuthor)
+
     time.sleep(0.01)
     articleID, code = article.Create(url, articleAuthor, articleContent['title'], articleContent['content'], 'zh-Hant')
 
@@ -104,6 +102,6 @@ def CreateArticle(inputs):
     for item in sentiments:
         code = emotionScore.Create(item['id'], item['score'])
         if code == 500:
-            log().debug("ERROR create comment with ID: " + item['id']+ " Comment: "+comments[int(item['id'])])
+            log().warn("ERROR create comment with ID: " + item['id']+ " Comment: "+comments[int(item['id'])])
 
     queryArticle()

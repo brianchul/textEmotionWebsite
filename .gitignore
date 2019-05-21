@@ -11,4 +11,4 @@ backend/app/config/conf\.py
 
 backend/\.vscode/
 
-backend/app/migrations/versions/
+backend/app/migrations/versions/\*.py

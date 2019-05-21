@@ -1,5 +1,11 @@
 class Config(object):
-    db = "mysql+pymysql://USERNAME:PASSWD@HOST:3306/DATABASE"
+    db_host = "HOST"
+    db_port = "3306"
+    db_account = "USERNAME"
+    db_passwd = "PASSWD"
+    db_database = "DATABASE"
+    db = "mysql+pymysql://" + db_account + ":" + db_passwd + "@" + db_host+":"+db_port+ "/" + db_database
+    
     #for docker use
     # db = "mysql+pymysql://Username:password@host.docker.internal:3306/DATABASE"
 

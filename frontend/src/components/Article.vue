@@ -1,8 +1,8 @@
 <template>
   <div class="articleWrapper">
-    {{content}}
+    <div class="title">文章</div>
     <div class="content" slot="content" v-html="content.Content">
-      {{content.Content.replace(/(\\r)*\\n/g, '<br />');}}
+      {{content.Content}}
     </div>
   </div>
 </template>
@@ -13,19 +13,28 @@ export default {
   props: {
     content: Object,
   },
-  created() {
-  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .articleWrapper {
-  width: 30vw;
+  width: 70%;
+}
+.title {
+  height: 45px;
+  font-size: 32px;
 }
 .content {
+  width: 70%;
+  position: absolute;
+  top: 45px;
+  bottom: 0px;
+  text-align: left;
   display: flex;
-  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
 }
 .articleWrapper>>>.hl.f3 {
     color: #ff6;

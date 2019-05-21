@@ -12,7 +12,7 @@ def FindOneOrCreate(lang):
         query.pop("id")
         query.pop("created_time")
         query.pop("updated_time")
-        log().debug(query)
+
         return query, 200
     else:
         return None, 404
